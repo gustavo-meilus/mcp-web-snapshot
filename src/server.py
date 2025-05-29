@@ -1,6 +1,11 @@
-def main():
-    print("Hello from mcp-web-snapshot!")
+from mcp.server.fastmcp import FastMCP
+from registry import register_all_tools
 
+# Create an MCP server
+mcp = FastMCP("Website Snapshot")
+
+# Register all tools
+register_all_tools(mcp)
 
 if __name__ == "__main__":
-    main()
+    mcp.run()
