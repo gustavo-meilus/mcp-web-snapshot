@@ -1,0 +1,15 @@
+[project]
+name = "mcp-web-snapshot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=1.9.2",
+    "playwright>=1.52.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.12",
+]
