@@ -96,9 +96,11 @@ def parse_refs(snapshot: str) -> List[Dict[str, str]]:
                 )
     return refs
 
+
 def is_valid_url(url: str) -> bool:
     parsed = urlparse(url)
     return all([parsed.scheme, parsed.netloc])
+
 
 async def website_snapshot(target_url: str) -> List[TextContent]:
     """
@@ -108,7 +110,9 @@ async def website_snapshot(target_url: str) -> List[TextContent]:
 
     if not is_valid_url(target_url):
         return [
-            TextContent(type="text", text='Url must be valid, example: https://example.com')
+            TextContent(
+                type="text", text="Url must be valid, example: https://example.com"
+            )
         ]
 
     async with async_playwright() as p:
@@ -144,16 +148,12 @@ async def website_snapshot(target_url: str) -> List[TextContent]:
                     if entry.request == response.request and not entry.response:
                         entry.response = response
                         try:
-                            content_type = response.headers.get(
-                                "content-type", ""
-                            )
+                            content_type = response.headers.get("content-type", "")
                             content_length = int(
                                 response.headers.get("content-length", "0")
                             )
 
-                            if should_show_content(
-                                content_type, content_length
-                            ):
+                            if should_show_content(content_type, content_length):
                                 entry.response_body = await response.text()
                             else:
                                 entry.response_body = (
@@ -182,7 +182,6 @@ async def website_snapshot(target_url: str) -> List[TextContent]:
             snapshot_with_refs = add_element_refs(aria_snapshot)
             element_refs = parse_refs(snapshot_with_refs)
 
-
             # Format output
             output_parts = [
                 f"🔍 {await page.title()}",
@@ -196,20 +195,18 @@ async def website_snapshot(target_url: str) -> List[TextContent]:
                 ["", "🌐 Network Requests:", format_requests(network_requests)]
             )
 
-            output_parts.extend(
-                ["", "🖥️ Console:", format_console(console_messages)]
-            )
+            output_parts.extend(["", "🖥️ Console:", format_console(console_messages)])
 
             summary_parts = [f"{len(element_refs)} elements"]
 
             summary_parts.append(
                 f"{len([r for r in network_requests if r.request])} requests"
             )
-            
+
             summary_parts.append(f"{len(console_messages)} console messages")
 
             await context.close()
-            
+
             return [
                 TextContent(
                     type="text",

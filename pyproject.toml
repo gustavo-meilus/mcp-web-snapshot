@@ -1,7 +1,7 @@
 [project]
 name = "mcp-web-snapshot"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Model Context Protocol (MCP) server that provides comprehensive website snapshot capabilities using Playwright for LLM integration"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -11,5 +11,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.11.0",
+    "pytest-cov>=4.1.0",
     "ruff>=0.11.12",
 ]
